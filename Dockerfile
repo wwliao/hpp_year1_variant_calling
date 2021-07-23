@@ -59,4 +59,10 @@ RUN wget https://github.com/attractivechaos/k8/releases/download/0.2.5/k8-0.2.5.
     cp k8-0.2.5/k8-`uname -s` k8-0.2.5/k8
 ENV PATH="/opt/k8/k8-0.2.5:$PATH"
 
+# pbsv v2.6.2
+WORKDIR /opt/pbsv
+RUN wget https://github.com/PacificBiosciences/pbsv/releases/download/v2.6.2/pbsv && \
+    chmod +x pbsv
+ENV PATH="/opt/pbsv:$PATH"
+
 WORKDIR /data
