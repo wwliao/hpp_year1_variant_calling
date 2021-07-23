@@ -1,6 +1,8 @@
 FROM wwliao/hpp_base:latest
 LABEL maintainer="wen-wei.liao@yale.edu"
 
+USER root
+
 # minimap2 v2.21
 WORKDIR /opt/minimap2
 RUN wget https://github.com/lh3/minimap2/releases/download/v2.21/minimap2-2.21.tar.bz2 && \
