@@ -30,6 +30,19 @@ RUN wget https://github.com/samtools/samtools/releases/download/1.13/samtools-1.
     make && \
     make install
 
+# bcftools v1.13
+WORKDIR /opt/bcftools
+RUN wget https://github.com/samtools/bcftools/releases/download/1.13/bcftools-1.13.tar.bz2 && \
+    tar jxf bcftools-1.13.tar.bz2 && \
+    rm bcftools-1.13.tar.bz2 && \
+    cd bcftools-1.13/ && \
+    autoheader && \
+    autoconf -Wno-syntax && \
+    ./configure && \
+    make && \
+    make install
+
+# minimap2 v2.21
 WORKDIR /opt/minimap2
 RUN wget https://github.com/lh3/minimap2/releases/download/v2.21/minimap2-2.21.tar.bz2 && \
     tar jxf minimap2-2.21.tar.bz2 && \
@@ -38,6 +51,7 @@ RUN wget https://github.com/lh3/minimap2/releases/download/v2.21/minimap2-2.21.t
     make
 ENV PATH="/opt/minimap2/minimap2-2.21:/opt/minimap2/minimap2-2.21/misc:$PATH"
 
+# k8 v0.2.5
 WORKDIR /opt/k8
 RUN wget https://github.com/attractivechaos/k8/releases/download/0.2.5/k8-0.2.5.tar.bz2 && \
     tar jxf k8-0.2.5.tar.bz2 && \
