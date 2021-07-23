@@ -8,11 +8,21 @@ RUN apt-get update && \
         git wget autoconf build-essential zlib1g-dev libbz2-dev libcurl4-gnutls-dev \
 	liblzma-dev libncurses5-dev libncursesw5-dev libssl-dev
 
+# miniconda3 (python v3.9)
+ENV PATH="/opt/conda/bin:$PATH"
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64.sh -O ~/miniconda.sh && \
+    bash ~/miniconda.sh -b -p /opt/conda && \
+    rm ~/miniconda.sh && \
+    conda config --add channels defaults && \
+    conda config --add channels bioconda && \
+    conda config --add channels conda-forge && \
+    echo '. /opt/conda/etc/profile.d/conda.sh' > /etc/profile.d/conda.sh
+
 # cmake v3.21.0
 WORKDIR /opt/cmake_install
 RUN mkdir /opt/cmake && \
     wget https://github.com/Kitware/CMake/releases/download/v3.21.0/cmake-3.21.0-linux-x86_64.sh && \
-    sh cmake-3.21.0-linux-x86_64.sh --prefix=/opt/cmake --skip-license && \
+    bash cmake-3.21.0-linux-x86_64.sh --prefix=/opt/cmake --skip-license && \
     ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake && \
     rm -r /opt/cmake_install
 
@@ -82,5 +92,16 @@ RUN git clone https://github.com/fritzsedlazeck/Sniffles.git && \
     cmake .. && \
     make
 ENV PATH="/opt/sniffles/Sniffles/bin/sniffles-core-1.0.12:$PATH"
+
+# SVIM 2.0.0
+WORKDIR /opt/svim
+RUN wget https://github.com/eldariont/svim/archive/refs/tags/v2.0.0.tar.gz && \
+    tar zxf v2.0.0.tar.gz && \
+    rm v2.0.0.tar.gz && \
+    cd svim-2.0.0 && \
+    pip install .
+
+# Iris v1.0.4
+RUN conda install -y irissv=1.0.4
 
 WORKDIR /data
