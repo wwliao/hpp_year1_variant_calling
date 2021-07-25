@@ -5,6 +5,6 @@ USER root
 
 # whatshap v1.1
 WORKDIR /opt/whatshap
-RUN conda install whatshap=1.1
+RUN conda install -y whatshap=1.1
 
 WORKDIR /data
