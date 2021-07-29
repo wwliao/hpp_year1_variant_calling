@@ -4,7 +4,7 @@ This repository holds Docker build scripts for SV calling
 used by the [Human Pangenome Project](https://humanpangenome.org)
 and benchmark of different SV callers.
 
-# Comparison
+# SV Calling Benchmark
 
 We compare our callsets with the GIAB v0.6 Tier 1 SV benchmark set
 for HG002.
@@ -111,7 +111,46 @@ $ svim-asm diploid --interspersed_duplications_as_insertions \
   && bcftools index -t calls/svim-asm/HG002.GRCh38_no_alt.svim-asm.vcf.gz
 ```
 
-## Run Truvari
+## Compare with the GIAB benchmark set
+
+### Filter pbsv callset
+
+```sh
+$ cat <(zcat HG002.GRCh38_no_alt.pbsv.vcf.gz | grep "^#") \
+      <(zcat HG002.GRCh38_no_alt.pbsv.vcf.gz | grep -vE "^#" | grep 'INS\|DEL') \
+      | bgzip -c > HG002.GRCh38_no_alt.pbsv.filtered.vcf.gz \
+  && bcftools index -t HG002.GRCh38_no_alt.pbsv.filtered.vcf.gz
+```
+
+### Filter Sniffles callset
+
+```sh
+$ cat <(zcat HG002.GRCh38_no_alt.sniffles.vcf.gz | grep "^#") \
+      <(zcat HG002.GRCh38_no_alt.sniffles.vcf.gz | grep -vE "^#" | grep 'INS\|DEL') \
+      | bgzip -c > HG002.GRCh38_no_alt.sniffles.filtered.vcf.gz \
+  && bcftools index -t HG002.GRCh38_no_alt.sniffles.filtered.vcf.gz
+```
+
+### Filter SVIM callset
+
+```sh
+$ cat <(zcat HG002.GRCh38_no_alt.svim.vcf.gz | grep "^#") \
+      <(zcat HG002.GRCh38_no_alt.svim.vcf.gz | grep -vE "^#" | grep 'INS\|DEL' \
+      | awk '{ if($6>='${SCORE}') { print $0 } }') \
+      | bgzip -c > HG002.GRCh38_no_alt.svim.filtered.vcf.gz \
+  && bcftools index -t HG002.GRCh38_no_alt.svim.filtered.vcf.gz
+```
+
+### Filter SVIM-asm callset
+
+```sh
+$ cat <(zcat HG002.GRCh38_no_alt.svim-asm.vcf.gz | grep "^#") \
+      <(zcat HG002.GRCh38_no_alt.svim-asm.vcf.gz | grep -vE "^#" | grep 'INS\|DEL') \
+	   | bgzip -c > HG002.GRCh38_no_alt.svim-asm.filtered.vcf.gz \
+  && bcftools index -t HG002.GRCh38_no_alt.svim-asm.filtered.vcf.gz
+```
+
+### Run Truvari on each callset
 
 Docker image: `wwliao/hpp_truvari:1.0.0--9352c3b9ffbe4680b1712ee465acdaec7f6f909f`
 
