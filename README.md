@@ -59,7 +59,8 @@ $ sniffles -s 4 \
           threads=12 \
           out_dir=calls/sniffles/tmp/HG002 \
           --also_deletions \
-          --hifi --rerunracon \
+          --hifi \
+	  --rerunracon \
           --keep_long_variants \
   && bcftools sort -m4G \
                    -Oz \
