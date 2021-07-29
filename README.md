@@ -6,8 +6,9 @@ and benchmark of different SV callers.
 
 # SV Calling Benchmark
 
-We compare our callsets with the GIAB v0.6 Tier 1 SV benchmark set
-for HG002.
+We compare our callsets with the [GIAB v0.6 Tier 1 SV benchmark set
+for HG002] (https://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/release/AshkenazimTrio/HG002_NA24385_son/NIST_SV_v0.6).
+Since the GIAB benchmark set is on GRCh37, we lifted over it to GRCh38 before doing comparison.
 
 ## Run pbsv
 
@@ -158,7 +159,7 @@ Docker image: `wwliao/hpp_truvari:1.0.0--9352c3b9ffbe4680b1712ee465acdaec7f6f909
 $ truvari bench -f GCA_000001405.15_GRCh38_no_alt_analysis_set.fa \
                 -b HG002_SVs_Tier1_v0.6.GRCh38.vcf.gz \
                 -c HG002.GRCh38_no_alt.${CALLER}.filtered.vcf.gz \
-                --includebed HG002_SVs_Tier1_v0.6.GRCh38.sorted.bed \
+                --includebed HG002_SVs_Tier1_v0.6.GRCh38.bed \
                 -o bench-${CALLER} \
                 -r 1000 \
                 -p 0.01 \
