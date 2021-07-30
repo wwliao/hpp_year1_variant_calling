@@ -159,7 +159,7 @@ $ svim-asm diploid --interspersed_duplications_as_insertions \
 
 We compare our HG002 SV callsets with the [GIAB v0.6 Tier 1 SV benchmark set
 for HG002](https://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/release/AshkenazimTrio/HG002_NA24385_son/NIST_SV_v0.6).
-Since the GIAB benchmark set is on GRCh37, we lifted over it to GRCh38 before doing comparison:
+Since the GIAB benchmark set is on GRCh37, we lifted over it to GRCh38:
 
 - [Lifted GIAB v0.6 Tier 1 SV bgzipped VCF file](https://github.com/wwliao/hpp_sv_calling/blob/main/giab/HG002_SVs_Tier1_v0.6.GRCh38.vcf.gz)
 - [Lifted GIAB v0.6 Tier 1 high-confidence SV BED file](https://github.com/wwliao/hpp_sv_calling/blob/main/giab/HG002_SVs_Tier1_v0.6.GRCh38.bed)
@@ -171,9 +171,7 @@ Since the GIAB benchmark set is on GRCh37, we lifted over it to GRCh38 before do
 |[**SVIM**](https://github.com/eldariont/svim)| 96.26| 90.70| 93.40| 96.14| 87.66| 91.70|
 |[**SVIM-asm**](https://github.com/eldariont/svim-asm)| 97.30| 90.84| 93.96| 96.16| 63.06| 76.17|
 
-## Compare with the GIAB benchmark set
-
-### Filter pbsv callset
+## Filter pbsv calls
 
 ```sh
 $ cat <(zcat HG002.GRCh38_no_alt.pbsv.vcf.gz | grep "^#") \
@@ -182,7 +180,7 @@ $ cat <(zcat HG002.GRCh38_no_alt.pbsv.vcf.gz | grep "^#") \
   && bcftools index -t HG002.GRCh38_no_alt.pbsv.filtered.vcf.gz
 ```
 
-### Filter Sniffles callset
+## Filter Sniffles calls
 
 ```sh
 $ cat <(zcat HG002.GRCh38_no_alt.sniffles.vcf.gz | grep "^#") \
@@ -191,7 +189,7 @@ $ cat <(zcat HG002.GRCh38_no_alt.sniffles.vcf.gz | grep "^#") \
   && bcftools index -t HG002.GRCh38_no_alt.sniffles.filtered.vcf.gz
 ```
 
-### Filter SVIM callset
+## Filter SVIM calls
 
 ```sh
 $ cat <(zcat HG002.GRCh38_no_alt.svim.vcf.gz | grep "^#") \
@@ -201,7 +199,7 @@ $ cat <(zcat HG002.GRCh38_no_alt.svim.vcf.gz | grep "^#") \
   && bcftools index -t HG002.GRCh38_no_alt.svim.filtered.vcf.gz
 ```
 
-### Filter SVIM-asm callset
+## Filter SVIM-asm calls
 
 ```sh
 $ cat <(zcat HG002.GRCh38_no_alt.svim-asm.vcf.gz | grep "^#") \
@@ -210,7 +208,7 @@ $ cat <(zcat HG002.GRCh38_no_alt.svim-asm.vcf.gz | grep "^#") \
   && bcftools index -t HG002.GRCh38_no_alt.svim-asm.filtered.vcf.gz
 ```
 
-### Run Truvari on each callset
+## Run Truvari on each callset
 
 Docker image: `wwliao/hpp_truvari:1.0.0--9352c3b9ffbe4680b1712ee465acdaec7f6f909f`
 
