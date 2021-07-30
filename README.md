@@ -122,11 +122,6 @@ $ sniffles -s 4 \
 
 ## Run SVIM
 
-**Figure 1. SVIM Precision-Recall Curve**
-
-<img src="figures/precision-recall_curve.svim.png" width="600px">
-
-
 Docker image: `wwliao/hpp_svim:1.0.0--93e7668e2ecd1fc315126e69da862fd365339509`
 
 ```sh
@@ -208,6 +203,10 @@ $ cat <(zcat HG002.GRCh38_no_alt.svim.vcf.gz | grep "^#") \
       | bgzip -c > HG002.GRCh38_no_alt.svim.filtered.vcf.gz \
   && bcftools index -t HG002.GRCh38_no_alt.svim.filtered.vcf.gz
 ```
+
+**Figure 1. SVIM Precision-Recall Curve**
+
+<img src="figures/precision-recall_curve.svim.png" width="600px">
 
 ## Filter SVIM-asm calls
 
