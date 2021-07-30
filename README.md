@@ -172,7 +172,7 @@ Since the GIAB benchmark set is on GRCh37, we lifted over it to GRCh38:
 |Caller|Recall %|Precision %|F1 %|GT-Recall %|GT-Precision %|GT-F1 %|
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 |[**pbsv**](https://github.com/PacificBiosciences/pbsv)| 95.57| 87.87| 91.56| 95.32| 82.88| 88.66|
-|[**Sniffles**](https://github.com/fritzsedlazeck/Sniffles) + [**Iris**](https://github.com/mkirsche/Iris)| 95.29| 93.04| 94.15| 90.28| 42.75| 58.02|
+|[**Sniffles**](https://github.com/fritzsedlazeck/Sniffles) + [**Iris**](https://github.com/mkirsche/Iris)| 95.29| 93.03| 94.15| 90.28| 42.75| 58.02|
 |[**SVIM**](https://github.com/eldariont/svim)| 96.26| 90.70| 93.40| 96.14| 87.66| 91.70|
 |[**SVIM-asm**](https://github.com/eldariont/svim-asm)| 97.30| 90.84| 93.96| 96.16| 63.06| 76.17|
 
