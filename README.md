@@ -174,6 +174,5 @@ $ truvari bench -f GCA_000001405.15_GRCh38_no_alt_analysis_set.fa \
                 -r 1000 \
                 -p 0.01 \
                 --passonly \
-                --no-ref a \
                 --giabreport
 ```
