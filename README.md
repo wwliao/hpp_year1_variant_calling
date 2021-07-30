@@ -3,6 +3,54 @@
 This repository holds Docker build scripts and benchmarks for variant calling
 used by the [Human Pangenome Project](https://humanpangenome.org).
 
+# Small Variant Calling
+
+## Run DeepVariant (First Pass)
+
+Docker image: `google/deepvariant:1.1.0`
+
+```sh
+$ run_deepvariant --model_type PACBIO \
+                  --ref GCA_000001405.15_GRCh38_no_alt_analysis_set.fa \
+                  --reads hifi_alignments/HG002.GRCh38_no_alt.bam \
+                  --output_gvcf calls/deepvariant/HG002.GRCh38_no_alt.deepvariant1.g.vcf.gz \
+                  --output_vcf calls/deepvariant/HG002.GRCh38_no_alt.deepvariant1.vcf.gz \
+                  --num_shards 16 \
+                  --call_variants_extra_args "use_openvino=true"
+```
+
+## Run whatshap
+
+Docker image: `wwliao/hpp_whatshap:1.0.0--4423f2ed9c728c3e569482b5693006e467a3a596`
+
+```sh
+$ whatshap phase --output calls/deepvariant/HG002.deepvariant1.phased.vcf.gz \
+                 --reference GCA_000001405.15_GRCh38_no_alt_analysis_set.fa \
+                 calls/deepvariant/HG002.GRCh38_no_alt.deepvariant1.vcf.gz \
+                 hifi_alignments/HG002.GRCh38_no_alt.bam \
+  && bcftools index -t calls/deepvariant/HG002.deepvariant1.phased.vcf.gz \
+  && whatshap haplotag --output calls/deepvariant/HG002.GRCh38_no_alt.haplotagged.bam \
+                       --reference GCA_000001405.15_GRCh38_no_alt_analysis_set.fa \
+                       calls/deepvariant/HG002.deepvariant1.phased.vcf.gz \
+                       hifi_alignments/HG002.GRCh38_no_alt.bam \
+  && samtools index calls/deepvariant/HG002.GRCh38_no_alt.haplotagged.bam
+```
+
+## Run DeepVariant (Second Pass)
+
+Docker image: `google/deepvariant:1.1.0`
+
+```sh
+$ run_deepvariant --model_type PACBIO \
+                  --ref GCA_000001405.15_GRCh38_no_alt_analysis_set.fa \
+                  --reads calls/deepvariant/HG002.GRCh38_no_alt.haplotagged.bam \
+                  --use_hp_information \
+                  --output_gvcf calls/deepvariant/HG002.GRCh38_no_alt.deepvariant.g.vcf.gz \
+                  --output_vcf calls/deepvariant/HG002.GRCh38_no_alt.deepvariant.vcf.gz \
+                  --num_shards 16 \
+                  --call_variants_extra_args "use_openvino=true"
+```
+
 # SV Calling
 
 ## Run pbsv
