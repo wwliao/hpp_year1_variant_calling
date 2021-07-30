@@ -14,6 +14,6 @@ $ chmod +x bigBedToBed
 $ ./bigBedToBed trf.bigBed CHM13.trf.bed
 $ cat <(cut -f1-3 CHM13.trf.bed) \
       <(grep -w "^chrY" GRCh38_no_alt.trf.bed) \
-	  <(grep -w "^chrEBV" GRCh38_no_alt.trf.bed) \
-	  > CHM13Y_EBV.trf.bed
+      <(grep -w "^chrEBV" GRCh38_no_alt.trf.bed) \
+      > CHM13Y_EBV.trf.bed
 ```
