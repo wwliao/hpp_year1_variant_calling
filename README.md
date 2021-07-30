@@ -1,8 +1,7 @@
 # HPP Variant Calling
 
-This repository holds Docker build scripts for SV calling
-used by the [Human Pangenome Project](https://humanpangenome.org)
-and benchmark of different variant callers.
+This repository holds Docker build scripts and benchmarks for variant calling
+used by the [Human Pangenome Project](https://humanpangenome.org).
 
 # SV Calling
 
