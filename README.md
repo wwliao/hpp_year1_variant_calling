@@ -55,6 +55,11 @@ $ run_deepvariant --model_type PACBIO \
 
 ## Run pbsv
 
+To increase pbsv calling performance, it is recommended to provide a tandem repeat annotation in BED format.
+
+- [TRF BED for GRCh38 no alt](https://github.com/wwliao/hpp_variant_calling/blob/main/annotations/GRCh38_no_alt.trf.bed)
+- [TRF BED for CHM13 v1.1 + chrY + EBV](https://github.com/wwliao/hpp_variant_calling/blob/main/annotations/CHM13Y_EBV.trf.bed)
+
 Docker image: `wwliao/hpp_pbsv:1.0.0--5ac93f8f6bd021a33feeb3fbca50466f27847b15`
 
 ```sh
