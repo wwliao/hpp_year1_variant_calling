@@ -122,6 +122,11 @@ $ sniffles -s 4 \
 
 ## Run SVIM
 
+**Figure 1. SVIM Precision-Recall Curve**
+
+<img src="figures/precision-recall_curve.svim.png" width="800px">
+
+
 Docker image: `wwliao/hpp_svim:1.0.0--93e7668e2ecd1fc315126e69da862fd365339509`
 
 ```sh
