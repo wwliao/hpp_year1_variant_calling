@@ -157,7 +157,7 @@ $ cat <(zcat HG002.GRCh38_no_alt.svim.vcf.gz | grep "^#") \
 ```sh
 $ cat <(zcat HG002.GRCh38_no_alt.svim-asm.vcf.gz | grep "^#") \
       <(zcat HG002.GRCh38_no_alt.svim-asm.vcf.gz | grep -vE "^#" | grep 'INS\|DEL') \
-	   | bgzip -c > HG002.GRCh38_no_alt.svim-asm.filtered.vcf.gz \
+      | bgzip -c > HG002.GRCh38_no_alt.svim-asm.filtered.vcf.gz \
   && bcftools index -t HG002.GRCh38_no_alt.svim-asm.filtered.vcf.gz
 ```
 
