@@ -1,7 +1,18 @@
-# HPP Variant Calling
+# HPP Year 1 Variant Calling
 
-This repository holds Docker build scripts and benchmarks for variant calling
+This repository holds Docker build scripts, workflows and benchmarks for variant calling
 used by the [Human Pangenome Project](https://humanpangenome.org).
+
+# Read-to-Reference Alignments
+
+We used Winnowmap v2.0.3 with `-x map-pb -a -Y -L --eqx --cs` to align HiFi reads against the
+references (GRCh38 without alts and CHM13 v1.1 with GRCh38-chrY and EBV). Then we added MD tag
+by calling `samtools calmd`.
+
+# Assembly-to-Reference Alignments
+
+We used minimap2 v2.21 with `-x asm5 -a --eqx --cs` to align paternal and maternal assemblies
+against the references (GRCh38 without alts and CHM13 v1.1 with GRCh38-chrY and EBV).
 
 # Small Variant Calling
 
