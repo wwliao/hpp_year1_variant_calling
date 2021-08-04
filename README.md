@@ -188,6 +188,12 @@ Since the GIAB benchmark set is on GRCh37, we lifted over it to GRCh38:
 |[**SVIM**](https://github.com/eldariont/svim)<br>(score >= 10)| 93.43| 92.26| 92.85| 93.24| 89.38| 91.27|
 |[**SVIM-asm**](https://github.com/eldariont/svim-asm)| 97.30| 90.84| 93.96| 96.16| 63.06| 76.17|
 
+**Figure 1. Insertion Sequence Similarity**
+
+Note that the sequence similarity is defined as [Levenshtein distance ratio](https://github.com/spiralgenetics/truvari/wiki/Edit-Distance-Ratio-vs-Sequence-Similarity).
+
+<img src="figures/insertion_sequence_similarity.png" width="600px">
+
 ## Filter pbsv calls
 
 ```sh
@@ -216,7 +222,7 @@ $ cat <(zcat HG002.GRCh38_no_alt.svim.vcf.gz | grep "^#") \
   && bcftools index -t HG002.GRCh38_no_alt.svim.filtered.vcf.gz
 ```
 
-**Figure 1. SVIM Precision-Recall Curve**
+**Figure 2. SVIM Precision-Recall Curve**
 
 <img src="figures/precision-recall_curve.svim.png" width="600px">
 
