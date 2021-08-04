@@ -224,7 +224,7 @@ $ cat <(zcat HG002.GRCh38_no_alt.svim.vcf.gz | grep "^#") \
 
 **Figure 2. SVIM Precision-Recall Curve**
 
-<img src="figures/precision-recall_curve.svim.png" width="600px">
+<img src="figures/precision-recall_curve.svim.png" width="500px">
 
 ## Filter SVIM-asm calls
 
