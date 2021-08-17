@@ -7,17 +7,17 @@ used by the [Human Pangenome Project](https://humanpangenome.org).
 
 Reads/assemblies are aligned to the following reference genomes:
 
-- **GRCh38\_no_alt**: GRCh38 without ALT contigs
+- `GRCh38_no_alt`: GRCh38 without ALT contigs
 
   ```sh
-  $ wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
+  $ wget https://s3-us-west-2.amazonaws.com/human-pangenomics/working/HPRC_PLUS/GRCh38/assemblies/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
   $ gunzip GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
 
   # pbsv doesn't recognize *.fna
   $ mv GCA_000001405.15_GRCh38_no_alt_analysis_set.fna GCA_000001405.15_GRCh38_no_alt_analysis_set.fa
   ```
 
-- **CHM13Y_EBV**: CHM13 v1.1 + chrY and chrEBV from `GRCh38_no_alt`
+- `CHM13Y_EBV`: CHM13 v1.1 + chrY and chrEBV from `GRCh38_no_alt`
 
   ```sh
   $ wget https://g-f20d48.ad0e3.03c0.data.globus.org/CHM13Y_EBV_v1.1.fasta.gz
