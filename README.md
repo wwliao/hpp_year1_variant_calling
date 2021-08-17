@@ -3,16 +3,88 @@
 This repository holds Docker build scripts, workflows and benchmarks for variant calling
 used by the [Human Pangenome Project](https://humanpangenome.org).
 
-# Read-to-Reference Alignments
+# HPP Year 1 Alignments w.r.t. References
 
-We used Winnowmap v2.0.3 with `-x map-pb -a -Y -L --eqx --cs` to align HiFi reads against the
-references (GRCh38 without alts and CHM13 v1.1 with GRCh38-chrY and EBV). Then we added MD tag
-by calling `samtools calmd`.
+Reads/assemblies are aligned to the following reference genomes:
 
-# Assembly-to-Reference Alignments
+- [GRCh38\_no\_alt](ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz): GRCh38 without ALT contigs.
+- [`CHM13Y_EBV`](https://g-f20d48.ad0e3.03c0.data.globus.org/CHM13Y_EBV_v1.1.fasta.gz): [CHM13 v1.1](https://s3-us-west-2.amazonaws.com/human-pangenomics/T2T/CHM13/assemblies/chm13.draft_v1.1.fasta.gz) + chrY and chrEBV from `GRCh38_no_alt` 
 
-We used minimap2 v2.21 with `-x asm5 -a --eqx --cs` to align paternal and maternal assemblies
-against the references (GRCh38 without alts and CHM13 v1.1 with GRCh38-chrY and EBV).
+## HiFi-to-Reference Alignments
+
+1. Compute high frequency k-mers in a reference genome using [meryl](https://github.com/marbl/meryl)
+
+   ```sh
+   #GRCh38_no_alt
+   $ meryl count k=15 output merylDB GCA_000001405.15_GRCh38_no_alt_analysis_set.fa
+   $ meryl print greater-than distinct=0.9998 merylDB > GCA_000001405.15_GRCh38_no_alt_analysis_set_repetitive_k15.txt
+
+   #CHM13Y_EBV
+   $ meryl count k=15 output merylDB CHM13Y_EBV_v1.1.fasta
+   $ meryl print greater-than distinct=0.9998 merylDB > CHM13Y_EBV_v1.1_repetitive_k15.txt
+   ```
+
+2. For each movie, align the HiFi reads using Winnowmap v2.03 and sort alignments by coordinates using SAMtools 
+
+   ```sh
+   $ winnowmap -W ${MERYLFILE} -t ${THREADS} \
+               -R "@RG\tID:${RGID}\tPL:PACBIO\tDS:READTYPE=CCS\tPU:${MOVIE}\tSM:${SAMPLE}\tPM:SEQUEL" \
+               -x map-pb -a -Y -L --eqx --cs ${REFFASTA} ${FASTQ} \
+     | samtools sort -m4G -@ ${THREADS} -o ${SAMPLE}.${MOVIE}.${REF}.bam
+   ```
+
+3. Merge alignments, add MD tags, and index aligments using SAMtools
+
+   ```sh
+   $ samtools merge -@ ${THREADS} ${SAMPLE}.${REF}.merged.bam ${BAMFILES} \
+     && samtools calmd -b -@ ${THREADS} ${SAMPLE}.${REF}.merged.bam ${REFFASTA} > ${SAMPLE}.${REF}.bam \
+     && samtools index -@ ${THREADS} ${SAMPLE}.${REF}.bam
+   ```
+
+## ONT-to-Reference Alignments
+
+1. Compute high frequency k-mers in a reference genome using [meryl](https://github.com/marbl/meryl)
+
+   ```sh
+   #GRCh38_no_alt
+   $ meryl count k=15 output merylDB GCA_000001405.15_GRCh38_no_alt_analysis_set.fa
+   $ meryl print greater-than distinct=0.9998 merylDB > GCA_000001405.15_GRCh38_no_alt_analysis_set_repetitive_k15.txt
+
+   #CHM13Y_EBV
+   $ meryl count k=15 output merylDB CHM13Y_EBV_v1.1.fasta
+   $ meryl print greater-than distinct=0.9998 merylDB > CHM13Y_EBV_v1.1_repetitive_k15.txt
+   ```
+
+2. For each flow cell, align the ONT reads using Winnowmap v2.03 and sort alignments by coordinates using SAMtools 
+
+   ```sh
+   $ winnowmap -W ${MERYLFILE} -t ${THREADS} \
+               -R "@RG\tID:${RGID}\tPL:ONT\tSM:${SAMPLE}" \
+	       -x map-ont -a -Y -L --eqx --cs ${REFFASTA} ${FASTQ} \
+     | samtools sort -m4G -@ ${THREADS} -o ${RGID}.${REF}.bam
+   ```
+
+3. Merge alignments, add MD tags, and index aligments using SAMtools
+
+   ```sh
+   $ samtools merge -@ ${THREADS} ${SAMPLE}.${REF}.merged.bam ${BAMFILES} \
+     && samtools calmd -b -@ ${THREADS} ${SAMPLE}.${REF}.merged.bam ${REFFASTA} > ${SAMPLE}.${REF}.bam \
+     && samtools index -@ ${THREADS} ${SAMPLE}.${REF}.bam
+   ```
+
+## Assembly-to-Reference Alignments
+
+Align paternal and maternal assemblies using minimap2 v2.21
+
+   ```sh
+   # paternal
+   $ minimap2 -x asm5 -a --eqx --cs -t ${THREADS} ${REFFASTA} ${SAMPLE}.paternal.f1_assembly_v2_genbank.fa \
+     | samtools sort --write-index -m4G -@ ${THREADS} -o ${SAMPLE}.paternal.${REF}.bam##idx##${SAMPLE}.paternal.${REF}.bam.bai
+   
+   # maternal
+   $ minimap2 -x asm5 -a --eqx --cs -t ${THREADS} ${REFFASTA} ${SAMPLE}.maternal.f1_assembly_v2_genbank.fa \
+     | samtools sort --write-index -m4G -@ ${THREADS} -o ${SAMPLE}.maternal.${REF}.bam##idx##${SAMPLE}.maternal.${REF}.bam.bai
+   ```
 
 # Small Variant Calling
 
