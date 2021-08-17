@@ -74,7 +74,7 @@ Reads/assemblies are aligned to the following reference genomes:
    ```sh
    $ winnowmap -W ${MERYLFILE} -t ${THREADS} \
                -R "@RG\tID:${RGID}\tPL:ONT\tSM:${SAMPLE}" \
-	       -x map-ont -a -Y -L --eqx --cs ${REFFASTA} ${FASTQ} \
+               -x map-ont -a -Y -L --eqx --cs ${REFFASTA} ${FASTQ} \
      | samtools sort -m4G -@ ${THREADS} -o ${RGID}.${REF}.bam
    ```
 
