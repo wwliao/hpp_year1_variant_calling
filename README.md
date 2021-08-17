@@ -7,7 +7,8 @@ used by the [Human Pangenome Project](https://humanpangenome.org).
 
 Reads/assemblies are aligned to the following reference genomes:
 
-- [`GRCh38_no_alt`](ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz): GRCh38 without ALT contigs.
+- [`GRCh38_no_alt`](ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz): GRCh38 without ALT contigs
+
 - [`CHM13Y_EBV`](https://g-f20d48.ad0e3.03c0.data.globus.org/CHM13Y_EBV_v1.1.fasta.gz): [CHM13 v1.1](https://s3-us-west-2.amazonaws.com/human-pangenomics/T2T/CHM13/assemblies/chm13.draft_v1.1.fasta.gz) + chrY and chrEBV from `GRCh38_no_alt` 
 
 ## HiFi-to-Reference Alignments
