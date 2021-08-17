@@ -24,7 +24,7 @@ Reads/assemblies are aligned to the following reference genomes:
   $ gunzip CHM13Y_EBV_v1.1.fasta.gz
   ```
 
-## HiFi-to-Reference Alignments
+## HiFi-to-reference alignments
 
 1. Compute high frequency k-mers in a reference genome using [meryl](https://github.com/marbl/meryl)
 
@@ -55,7 +55,7 @@ Reads/assemblies are aligned to the following reference genomes:
      && samtools index -@ ${THREADS} ${SAMPLE}.${REF}.bam
    ```
 
-## ONT-to-Reference Alignments
+## ONT-to-reference alignments
 
 1. Compute high frequency k-mers in a reference genome using [meryl](https://github.com/marbl/meryl)
 
@@ -86,7 +86,7 @@ Reads/assemblies are aligned to the following reference genomes:
      && samtools index -@ ${THREADS} ${SAMPLE}.${REF}.bam
    ```
 
-## Assembly-to-Reference Alignments
+## Assembly-to-reference alignments
 
 Align paternal and maternal assemblies using minimap2 v2.21
 
