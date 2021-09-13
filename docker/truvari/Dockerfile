@@ -7,6 +7,7 @@ USER root
 WORKDIR /opt/truvari
 RUN git clone https://github.com/spiralgenetics/truvari.git && \
     cd truvari && \
+    conda install python=3.8 && \
     python -m pip install --upgrade pip setuptools wheel && \
     python setup.py sdist bdist_wheel && \
     pip install dist/Truvari-3.0.0.dev0.tar.gz
