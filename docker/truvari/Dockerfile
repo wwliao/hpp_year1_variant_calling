@@ -9,6 +9,6 @@ RUN git clone https://github.com/spiralgenetics/truvari.git && \
     cd truvari && \
     python -m pip install --upgrade pip setuptools wheel && \
     python setup.py sdist bdist_wheel && \
-    pip install dist/Truvari-3.0.0-dev.tar.gz
+    pip install dist/Truvari-3.0.0.dev0.tar.gz
 
 WORKDIR /data
