@@ -1,7 +1,7 @@
 # Definitions
 repository = wwliao
 identifier = hpp_truvari
-version = 1.1.0
+version = 1.1.1
 git_commit ?= $(shell git log --pretty=oneline -n 1 | cut -f1 -d " ")
 name = ${repository}/${identifier}
 tag = ${version}--${git_commit}
