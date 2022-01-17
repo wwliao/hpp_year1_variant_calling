@@ -1,4 +1,4 @@
-FROM wwliao/hpp_base:1.0.0
+FROM wwliao/hpp_base:1.0.0--f6afa9eaa53cc9f176b9ed0d6a33767c8f8cbc21
 LABEL maintainer="wen-wei.liao@yale.edu"
 
 USER root
