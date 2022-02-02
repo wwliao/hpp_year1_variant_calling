@@ -71,7 +71,7 @@ for variant in vcf:
     chrom = variant.CHROM
     pos = variant.POS
     qual = variant.QUAL
-    if variant.gt_phases[0]:
+    if variant.genotypes[0][2]:
         gt_str = "|".join(map(str, variant.genotypes[0][:2])) 
     else:
         gt_str = "/".join(map(str, variant.genotypes[0][:2]))
