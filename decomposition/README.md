@@ -24,6 +24,11 @@
     ```
 
 3. Decompose graph variants
+
+    `decompose_graph_variants.py` requires the following packages to be installed:
+
+    - [`libbdsg`](https://github.com/vgteam/libbdsg): to access the HPRC pangenome graph in HashGraph format
+    - [`cyvcf2`](https://github.com/brentp/cyvcf2): to parse and write the graph variants in VCF format
     
     ```sh
     python3 decompose_graph_variants.py -o $SAMPLE.$GRAPH.decomposed.vcf.gz \
