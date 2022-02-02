@@ -63,6 +63,10 @@ graph.deserialize(args.graph)
 
 vcf = VCF(args.vcffile)
 w = Writer(args.output, vcf)
+w.add_info_to_header({"ID": "SVTYPE", "Number": "1", "Type": "String", "Description": "Type of variant"})
+w.add_info_to_header({"ID": "END", "Number": "1", "Type": "Integer", "Description": "End position of the variant described in this record"})
+w.add_info_to_header({"ID": "SVLEN", "Number": "1", "Type": "Integer", "Description": "Length of variant"})
+w.add_info_to_header({"ID": "RS", "Number": "1", "Type": "String", "Description": "ID of variant corresponding to root snarl"})
 for variant in vcf:
     chrom = variant.CHROM
     pos = variant.POS
@@ -83,8 +87,14 @@ for variant in vcf:
     assert(diff_len == 0 or diff_len == 1)
     added_onebase = True if diff_len == 1 else False
 
-    # Create an untangled reference traversal
     ref_steps = get_steps(ref_at)
+
+    # 
+    root_snarl = ""
+    if variant.INFO.get("LV") == 0:
+        root_snarl = f"{ref_steps[0]}{ref_steps[-1]}"
+
+    # Create an untangled reference traversal
     ref_ut = []
     start = pos
     if added_onebase:
@@ -129,15 +139,23 @@ for variant in vcf:
                 svlen = len(alt_seq) - len(ref_seq)
                 svtype = "DEL" if svlen < 0 else "INS"
             anchor_start = source_start + step_size - 1
+            anchor_end = anchor_start + len(ref_seq)
             ref_seq = source_seq[-1] + ref_seq
             alt_seq = source_seq[-1] + alt_seq
 
-        if svtype == "SNP":
+        if svtype in ["SNP", "MNP"]:
             id = f"{chrom}-{variant_start}-{svtype}-{ref_seq}-{alt_seq}"
+            if root_snarl:
+                variant_str = f"{chrom}\t{anchor_start}\t{id}\t{ref_seq}\t{alt_seq}\t{qual:.0f}\t.\tSVTYPE={svtype};AT={ref_path},{alt_path};RS={root_snarl}\tGT\t{gt_str}"
+            else:
+                variant_str = f"{chrom}\t{anchor_start}\t{id}\t{ref_seq}\t{alt_seq}\t{qual:.0f}\t.\tSVTYPE={svtype};AT={ref_path},{alt_path}\tGT\t{gt_str}"
         else:
             id = f"{chrom}-{variant_start}-{svtype}-{abs(svlen)}"
-        #variant_str = f"{chrom}\t{anchor_start}\t{id}\t{ref_seq}\t{alt_seq}\t{qual:.0f}\t.\tSVTYPE={svtype};SVLEN={svlen};AT={ref_path},{alt_path}\tGT\t{gt_str}"
-        variant_str = f"{chrom}\t{anchor_start}\t{id}\t{ref_seq}\t{alt_seq}\t{qual:.0f}\t.\tAT={ref_path},{alt_path}\tGT\t{gt_str}"
+            if root_snarl:
+                variant_str = f"{chrom}\t{anchor_start}\t{id}\t{ref_seq}\t{alt_seq}\t{qual:.0f}\t.\tSVTYPE={svtype};END={anchor_end};SVLEN={svlen};AT={ref_path},{alt_path};RS={root_snarl}\tGT\t{gt_str}"
+            else:
+                variant_str = f"{chrom}\t{anchor_start}\t{id}\t{ref_seq}\t{alt_seq}\t{qual:.0f}\t.\tSVTYPE={svtype};END={anchor_end};SVLEN={svlen};AT={ref_path},{alt_path}\tGT\t{gt_str}"
+
         v = w.variant_from_string(variant_str)
         w.write_record(v)
 
