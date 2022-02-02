@@ -16,8 +16,8 @@ Work in progress. Please don't use the script.
 
     There are two HPRC pangenome graphs:
     
-    - Minigraph-Cactus: [hprc-v1.0-mc-grch38.gfa.gz] (https://s3-us-west-2.amazonaws.com/human-pangenomics/pangenomes/freeze/freeze1/minigraph-cactus/hprc-v1.0-mc-grch38.gfa.gz)
-    - PGGB: [hprc-v1.0-pggb.gfa.gz] (https://s3-us-west-2.amazonaws.com/human-pangenomics/pangenomes/freeze/freeze1/pggb/hprc-v1.0-pggb.gfa.gz)
+    - Minigraph-Cactus: [hprc-v1.0-mc-grch38.gfa.gz](https://s3-us-west-2.amazonaws.com/human-pangenomics/pangenomes/freeze/freeze1/minigraph-cactus/hprc-v1.0-mc-grch38.gfa.gz)
+    - PGGB: [hprc-v1.0-pggb.gfa.gz](https://s3-us-west-2.amazonaws.com/human-pangenomics/pangenomes/freeze/freeze1/pggb/hprc-v1.0-pggb.gfa.gz)
 
     Using VG to convert GFA to HashGraph
 
