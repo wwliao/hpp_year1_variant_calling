@@ -1,6 +1,4 @@
-# Graph variant decomposition
-
-Work in progress. Please don't use the script.
+# Graph variant decomposition (work in progress)
 
 1. Extract a given sample from the VG-deconstructed VCF
 
