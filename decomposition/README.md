@@ -30,6 +30,7 @@
     - [`libbdsg`](https://github.com/vgteam/libbdsg): to access the HPRC pangenome graph in HashGraph format
     - [`cyvcf2`](https://github.com/brentp/cyvcf2): to parse and write the graph variants in VCF format
     
+
     ```sh
     python3 decompose_graph_variants.py -o $SAMPLE.$GRAPH.decomposed.vcf.gz \
                                            $GRAPH.hg \
@@ -40,4 +41,9 @@
                          $SAMPLE.$GRAPH.decomposed.vcf.gz \
         && bcftools index -t $SAMPLE.$GRAPH.decomposed.sorted.vcf.gz
     ```
+
+# TODO
+
+- Switch from HashGraph to PackedGraph to reduce the memory usage (PGGB in HashGraph: >500GB memory)
+- Remove duplicated records and update genotypes
 
