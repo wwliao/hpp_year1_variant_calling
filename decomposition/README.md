@@ -46,4 +46,4 @@
 
 - Switch from HashGraph to PackedGraph to reduce the memory usage (PGGB in HashGraph: >500GB memory)
 - Remove duplicated records and update genotypes
-
+- Figure out why there are still redundant structures in Minigraph-Cactus
