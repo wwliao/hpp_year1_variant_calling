@@ -47,3 +47,4 @@
 - Switch from HashGraph to PackedGraph to reduce the memory usage (PGGB in HashGraph: >500GB memory)
 - Remove duplicated records and update genotypes
 - Figure out why there are still redundant structures in Minigraph-Cactus
+- Some lower-level allele traversals don't exist in higher-level allele traversals. For example, check the top-level snarl `>2539380>2539432` and its nested snarls.
