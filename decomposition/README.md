@@ -42,6 +42,15 @@
         && bcftools index -t $SAMPLE.$GRAPH.decomposed.sorted.vcf.gz
     ```
 
+4. Remove duplicates
+
+    Records decomposed from different level of snarls might represent exactly the same variant but different genotypes.
+    We only keep those derived from the root snarls (i.e. records with INFO/RS) with a genotype that best fit the corresponding record.
+
+    ```sh
+    python3 remove_duplicates.py $SAMPLE.$GRAPH.decomposed.sorted.vcf.gz
+    ```
+
 # TODO
 
 - Switch from HashGraph to PackedGraph to reduce the memory usage (PGGB in HashGraph: >500GB memory)
