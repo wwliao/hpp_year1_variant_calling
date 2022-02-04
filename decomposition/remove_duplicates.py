@@ -19,7 +19,7 @@ def get_alt_count(genotype):
 
 prefix = re.search("(\S+).vcf.gz", basename(args.vcffile))[1]
 with gzip.open(args.vcffile, "rt", encoding="utf-8") as infile:
-    with gzip.open(f"{prefix}.rmdup.vcf.gz", "wt") as outfile:
+    with open(f"{prefix}.rmdup.vcf", "w") as outfile:
         seen_id = ""
         for line in infile:
             if line.startswith("#"):
