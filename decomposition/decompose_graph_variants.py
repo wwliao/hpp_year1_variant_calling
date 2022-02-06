@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 import re
 import argparse
-from bdsg.bdsg import HashGraph
+from os.path import basename, splitext
+from bdsg.bdsg import HashGraph, ODGI, PackedGraph
 from cyvcf2 import VCF, Variant, Writer
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-o", "--output", required=True)
-parser.add_argument("graph", help="graph in HashGraph format")
+parser.add_argument("-o", "--output", required=True, help="output VCF file name")
+parser.add_argument("graph", help="pangenome graph in HashGraph/ODGI/PackedGraph format")
 parser.add_argument("vcffile", help="input biallelic VCF file")
 args = parser.parse_args()
 
@@ -27,7 +28,6 @@ def decompose_traversal(query, target, coords):
     source = (0, 0)
     for i, target_step in enumerate(target_steps):
         if i > 0 and target_step in query_steps[source[1]+1:]:
-            #j = source[1] + 1 + query_steps[source[1]+1:].index(target_step)
             j = query_steps.index(target_step, source[1]+1)
             target_interval = i - source[0] - 1
             query_interval = j - source[1] - 1
@@ -58,7 +58,15 @@ def get_allele_seq(path, graph):
             seq += graph.get_sequence(graph.get_handle(node, True))
     return seq
 
-graph = HashGraph()
+graph_format = splitext(basename(args.graph))[1]
+assert(graph_format in [".hg", "og", "pg"])
+if graph_format == ".hg":
+    graph = HashGraph()
+elif graph_format == ".og":
+    graph = ODGI()
+else:
+    graph = PackedGraph()
+
 graph.deserialize(args.graph)
 
 vcf = VCF(args.vcffile)
