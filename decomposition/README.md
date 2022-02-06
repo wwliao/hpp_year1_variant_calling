@@ -17,7 +17,7 @@
     - Minigraph-Cactus: [hprc-v1.0-mc-grch38.gfa.gz](https://s3-us-west-2.amazonaws.com/human-pangenomics/pangenomes/freeze/freeze1/minigraph-cactus/hprc-v1.0-mc-grch38.gfa.gz)
     - PGGB: [hprc-v1.0-pggb.gfa.gz](https://s3-us-west-2.amazonaws.com/human-pangenomics/pangenomes/freeze/freeze1/pggb/hprc-v1.0-pggb.gfa.gz)
 
-    Here, we chose to convert GFA to PackedGraph because of its low-memory footprint.
+    Here, we chose to convert GFA to PackedGraph because of its low-memory footprint:
 
     ```sh
     vg convert -g -p -t 36 <input GFA> > <output PackedGraph>
@@ -33,7 +33,7 @@
 
     ```sh
     python3 decompose_graph_variants.py -o $SAMPLE.$GRAPH.decomposed.vcf.gz \
-                                           $GRAPH.hg \
+                                           $GRAPH.pg \
                                            $SAMPLE.$GRAPH.vcf.gz \
         && bcftools sort -m 10G \
                          -T $SAMPLE_sort_tmp/ \
