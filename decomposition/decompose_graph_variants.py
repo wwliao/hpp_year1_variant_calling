@@ -59,7 +59,7 @@ def get_allele_seq(path, graph):
     return seq
 
 graph_format = splitext(basename(args.graph))[1]
-assert(graph_format in [".hg", "og", "pg"])
+assert(graph_format in [".hg", ".og", ".pg"])
 if graph_format == ".hg":
     graph = HashGraph()
 elif graph_format == ".og":
