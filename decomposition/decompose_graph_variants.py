@@ -3,7 +3,7 @@ import re
 import argparse
 from os.path import basename, splitext
 from bdsg.bdsg import HashGraph, ODGI, PackedGraph
-from cyvcf2 import VCF, Variant, Writer
+from cyvcf2 import VCF, Writer
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-o", "--output", required=True, help="output VCF file name")
