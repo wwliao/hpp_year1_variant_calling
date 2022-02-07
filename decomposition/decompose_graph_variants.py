@@ -74,10 +74,13 @@ w = Writer(args.output, vcf)
 w.add_info_to_header({"ID": "SVTYPE", "Number": "1", "Type": "String", "Description": "Type of variant"})
 w.add_info_to_header({"ID": "END", "Number": "1", "Type": "Integer", "Description": "End position of the variant described in this record"})
 w.add_info_to_header({"ID": "SVLEN", "Number": "1", "Type": "Integer", "Description": "Length of variant"})
+w.add_info_to_header({"ID": "SS", "Number": "1", "Type": "String", "Description": "ID of source snarl"})
 for variant in vcf:
     chrom = variant.CHROM
     pos = variant.POS
     qual = variant.QUAL
+    level = variant.INFO.get("LV")
+    source_snarl = variant.ID
     if variant.genotypes[0][2]:
         gt_str = "|".join(map(str, variant.genotypes[0][:2])) 
     else:
@@ -147,10 +150,10 @@ for variant in vcf:
 
         if svtype in ["SNP", "MNP"]:
             id = f"{chrom}-{variant_start}-{svtype}-{ref_seq}-{alt_seq}"
-            variant_str = f"{chrom}\t{anchor_start}\t{id}\t{ref_seq}\t{alt_seq}\t{qual:.0f}\t.\tSVTYPE={svtype};AT={ref_path},{alt_path}\tGT\t{gt_str}"
+            variant_str = f"{chrom}\t{anchor_start}\t{id}\t{ref_seq}\t{alt_seq}\t{qual:.0f}\t.\tSVTYPE={svtype};AT={ref_path},{alt_path};LV={level};SS={source_snarl}\tGT\t{gt_str}"
         else:
             id = f"{chrom}-{variant_start}-{svtype}-{abs(svlen)}"
-            variant_str = f"{chrom}\t{anchor_start}\t{id}\t{ref_seq}\t{alt_seq}\t{qual:.0f}\t.\tSVTYPE={svtype};END={anchor_end};SVLEN={svlen};AT={ref_path},{alt_path}\tGT\t{gt_str}"
+            variant_str = f"{chrom}\t{anchor_start}\t{id}\t{ref_seq}\t{alt_seq}\t{qual:.0f}\t.\tSVTYPE={svtype};END={anchor_end};SVLEN={svlen};AT={ref_path},{alt_path};LV={level};SS={source_snarl}\tGT\t{gt_str}"
 
         v = w.variant_from_string(variant_str)
         w.write_record(v)
