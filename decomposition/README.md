@@ -32,14 +32,15 @@
     
 
     ```sh
-    python3 decompose_graph_variants.py -o $SAMPLE.$GRAPH.decomposed.vcf.gz \
+    python3 decompose_graph_variants.py -o $SAMPLE.$GRAPH.decomposed.unsorted.vcf.gz \
                                            $GRAPH.pg \
                                            $SAMPLE.$GRAPH.vcf.gz \
         && bcftools sort -m 10G \
                          -T $SAMPLE_sort_tmp/ \
-                         -Oz -o $SAMPLE.$GRAPH.decomposed.sorted.vcf.gz \
-                         $SAMPLE.$GRAPH.decomposed.vcf.gz \
-        && bcftools index -t $SAMPLE.$GRAPH.decomposed.sorted.vcf.gz
+                         -Oz -o $SAMPLE.$GRAPH.decomposed.vcf.gz \
+                         $SAMPLE.$GRAPH.decomposed.unsorted.vcf.gz \
+        && bcftools index -t $SAMPLE.$GRAPH.decomposed.vcf.gz \
+		&& rm $SAMPLE.$GRAPH.decomposed.unsorted.vcf.gz
     ```
 
 4. Remove duplicates
@@ -51,7 +52,8 @@
     python3 remove_duplicates.py $SAMPLE.$GRAPH.decomposed.sorted.vcf.gz
     ```
 
-# TODO
-
+# To-do
 - Figure out why there are still redundant structures in Minigraph-Cactus
-- Some lower-level allele traversals don't exist in higher-level allele traversals. For example, check the top-level snarl `>2539380>2539432` and its nested snarls.
+
+# Known issues
+- VG-deconstructed AT fields not necessarily consistent with different levels (see [issue #3541](https://github.com/vgteam/vg/issues/3541))
