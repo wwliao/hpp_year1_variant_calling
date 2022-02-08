@@ -40,7 +40,7 @@
                          -Oz -o $SAMPLE.$GRAPH.decomposed.vcf.gz \
                          $SAMPLE.$GRAPH.decomposed.unsorted.vcf.gz \
         && bcftools index -t $SAMPLE.$GRAPH.decomposed.vcf.gz \
-		&& rm $SAMPLE.$GRAPH.decomposed.unsorted.vcf.gz
+        && rm $SAMPLE.$GRAPH.decomposed.unsorted.vcf.gz
     ```
 
 4. Remove duplicates
