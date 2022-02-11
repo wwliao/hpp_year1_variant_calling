@@ -5,12 +5,29 @@
     ```sh
     PREFIX=$(basename $VCF .vcf.gz)
     bcftools view -a -I -s $SAMPLE -Ou $VCF \
-        | bcftools view -e 'GT="ref" | GT="0|." | GT=".|0" | GT=".|." | GT="." | GT="0/." | GT="./0" | GT="./."' -Ou \
-        | bcftools norm -m -any -Oz -o $SAMPLE.$PREFIX.vcf.gz \
+        | bcftools view -e 'GT="ref" | GT="0|." | GT=".|0" | GT=".|." | GT="." | GT="0/." | GT="./0" | GT="./."' \
+                        -Oz -o $SAMPLE.$PREFIX.vcf.gz \
 	    && bcftools index -t $SAMPLE.$PREFIX.vcf.gz
     ```
 
-2. Convert the format of HPRC pangenome graphs from GFA to HashGraph/ODGI/PackedGraph
+2. Drop any sites whose traversals aren’t nested in their parents’
+
+	```sh
+	drop_inconsistent_sites.py $SAMPLE.$PREFIX.vcf.gz
+	```
+
+3. Split multiallelic sites into biallelic records
+
+    We need to compare traversals between reference and alternate to decompose graph variants.
+	Therefore, it is easier to work with if the VCF file is biallelic instead of multiallelic.
+
+	```sh
+    bcftools norm -m -any \
+	              -Oz -o $SAMPLE.$PREFIX.consistent.biallelic.vcf.gz \
+				  $SAMPLE.$PREFIX.consistent.vcf.gz
+	```
+
+4. Convert the format of HPRC pangenome graphs from GFA to HashGraph/ODGI/PackedGraph
 
     There are two HPRC pangenome graphs:
     
@@ -23,7 +40,7 @@
     vg convert -g -p -t 36 <input GFA> > <output PackedGraph>
     ```
 
-3. Decompose graph variants
+5. Decompose graph variants through comparing traversals between reference and alternate
 
     `decompose_graph_variants.py` requires the following packages to be installed:
 
@@ -43,7 +60,7 @@
         && rm $SAMPLE.$GRAPH.decomposed.unsorted.vcf.gz
     ```
 
-4. Remove duplicates
+6. Remove duplicates
 
     Records decomposed from different level of snarls might represent exactly the same variant but different genotypes.
     We only keep those derived from the root snarls (i.e. records with INFO/RS) with a genotype that best fit the corresponding record.
