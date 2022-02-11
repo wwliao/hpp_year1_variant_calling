@@ -70,7 +70,7 @@
 
 7. Update GTs and remove duplicates
 
-    Records decomposed from different level of snarls might represent exactly the same variant but with idifferent genotypes.
+    Records decomposed from different level of snarls might represent exactly the same variant but with different genotypes.
 
     ```sh
     python3 remove_duplicates.py $SAMPLE.$GRAPH.decomposed.concise.vcf.gz
