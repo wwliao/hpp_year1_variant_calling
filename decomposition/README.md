@@ -10,7 +10,7 @@
 	    && bcftools index -t $SAMPLE.$PREFIX.vcf.gz
     ```
 
-2. Drop any sites whose traversals aren’t nested in their parents’
+2. Drop any sites whose traversals aren’t nested in their parents’ (see [issue #3541](https://github.com/vgteam/vg/issues/3541))
 
 	```sh
 	drop_inconsistent_sites.py $SAMPLE.$PREFIX.vcf.gz
