@@ -59,8 +59,16 @@
         && bcftools index -t $SAMPLE.$GRAPH.decomposed.vcf.gz \
         && rm $SAMPLE.$GRAPH.decomposed.unsorted.vcf.gz
     ```
+6. Drop redundant records
 
-6. Remove duplicates
+	```sh
+	bcftools -e 'REF=ALT' \
+	         -Oz -o $SAMPLE.$GRAPH.decomposed.concise.vcf.gz \
+			 $SAMPLE.$GRAPH.decomposed.vcf.gz \
+        && bcftools index -t $SAMPLE.$GRAPH.decomposed.concise.vcf.gz
+	```
+
+7. Update GTs and remove duplicates
 
     Records decomposed from different level of snarls might represent exactly the same variant but different genotypes.
     We only keep those derived from the root snarls (i.e. records with INFO/RS) with a genotype that best fit the corresponding record.
