@@ -44,7 +44,7 @@
 
     `decompose_graph_variants.py` requires the following packages to be installed:
 
-    - [`libbdsg`](https://github.com/vgteam/libbdsg): to access the HPRC pangenome graph in HashGraph format
+    - [`libbdsg`](https://github.com/vgteam/libbdsg): to access the HPRC pangenome graph in HashGraph/ODGI/PackedGraph format
     - [`cyvcf2`](https://github.com/brentp/cyvcf2): to parse and write the graph variants in VCF format
     
 
@@ -59,7 +59,10 @@
         && bcftools index -t $SAMPLE.$GRAPH.decomposed.vcf.gz \
         && rm $SAMPLE.$GRAPH.decomposed.unsorted.vcf.gz
     ```
-6. Drop redundant records
+6. Drop homozygous reference records
+
+	Due to the redundant structures in the pangenome graph,
+	there are records with GT != 0|0 or 0/0 but their traversals spell the same REF alleles.
 
 	```sh
 	bcftools -e 'REF=ALT' \
