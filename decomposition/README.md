@@ -24,7 +24,7 @@
 	```sh
     bcftools norm -m -any \
 	              -Oz -o $SAMPLE.$PREFIX.consistent.biallelic.vcf.gz \
-				  $SAMPLE.$PREFIX.consistent.vcf.gz
+	              $SAMPLE.$PREFIX.consistent.vcf.gz
 	```
 
 4. Convert the format of HPRC pangenome graphs from GFA to HashGraph/ODGI/PackedGraph
@@ -75,7 +75,7 @@
 	```sh
 	bcftools -e 'REF=ALT' \
 	         -Oz -o $SAMPLE.$GRAPH.decomposed.concise.vcf.gz \
-			 $SAMPLE.$GRAPH.decomposed.vcf.gz \
+	         $SAMPLE.$GRAPH.decomposed.vcf.gz \
         && bcftools index -t $SAMPLE.$GRAPH.decomposed.concise.vcf.gz
 	```
 
