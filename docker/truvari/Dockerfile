@@ -3,7 +3,7 @@ LABEL maintainer="wen-wei.liao@yale.edu"
 
 USER root
 
-# truvari v3.2.0-dev (commit: 6891b95d0aed82fb1ac824e984b26704d541a041)
+# truvari v3.2.0-dev (commit: 0e43cb8c878baeb89f23576f3c86a95420364afb)
 WORKDIR /opt/truvari
 RUN git clone https://github.com/ACEnglish/truvari.git && \
     cd truvari && \
